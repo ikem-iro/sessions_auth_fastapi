@@ -1,0 +1,18 @@
+[project]
+name = "authentication-using-sessions"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "apscheduler>=3.11.0",
+    "fastapi-plugins>=0.13.1",
+    "fastapi[standard]>=0.115.6",
+    "odmantic>=1.0.2",
+    "passlib[bcrypt]>=1.7.4",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.1",
+]
