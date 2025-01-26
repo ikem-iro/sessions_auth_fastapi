@@ -3,7 +3,7 @@ from fastapi.exceptions import HTTPException
 from crud.user_crud import find_one_user, create_user, find_user_by_id
 from crud.session_crud import create_session, delete_session
 from utils.pass_utils import verify_password
-from utils.helper_utils import individual_serialiser
+from utils.helper_utils import individual_serializer
 
 
 async def register_user(user, session):
@@ -16,7 +16,7 @@ async def register_user(user, session):
                 status_code=status.HTTP_409_CONFLICT, detail="User already exists"
             )
         new_user = await create_user(user=user, session=session)
-        formatted_user = individual_serialiser(new_user["new_user"])
+        formatted_user = individual_serializer(new_user["new_user"])
         return {"id": formatted_user["id"], "otp": new_user["new_otp"]}
     except HTTPException as e:
         return e
@@ -37,7 +37,7 @@ async def login_user(user, session):
                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
             )
 
-        formatted_user = individual_serialiser(user_exists)
+        formatted_user = individual_serializer(user_exists)
         new_session = await create_session(
             user_id=formatted_user["id"], session=session
         )
@@ -55,11 +55,11 @@ async def get_user_data(session, user_session):
         user = await find_user_by_id(user_id=user_session.user_id, session=session)
         if user is None:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Unverified user")
-        formatted_user = individual_serialiser(user)
+        formatted_user = individual_serializer(user)
         return formatted_user
     except HTTPException as e:
         return e
-    
+
 
 async def logout_user(session, user_session) -> bool:
     try:

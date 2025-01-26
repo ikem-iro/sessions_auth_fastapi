@@ -2,7 +2,7 @@ import random
 from crud.session_crud import get_expired_sessions, delete_expired_sessions
 
 
-def individual_serialiser(user) -> dict:
+def individual_serializer(user) -> dict:
     return {
         "id": str(user.id),
         "first_name": user.first_name,
@@ -16,8 +16,8 @@ def individual_serialiser(user) -> dict:
     }
 
 
-def list_serialiser(users) -> list:
-    return [individual_serialiser(user) for user in users]
+def list_serializer(users) -> list:
+    return [individual_serializer(user) for user in users]
 
 
 def generate_otp() -> str:
@@ -29,4 +29,3 @@ async def remove_expired_sessions():
     expired_session = await get_expired_sessions()
     await delete_expired_sessions(expired_session)
     return True
-
